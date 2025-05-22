@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
@@ -60,6 +21,7 @@
             text-align: center;
             max-width: 600px;
             padding: 20px;
+            display: none; /* Сховати контейнер, доки не завантажиться JS */
         }
         h1 {
             font-size: 2em;
@@ -81,20 +43,46 @@
         .btn:hover {
             background-color: #0056b3;
         }
+        .loading {
+            font-size: 1.2em;
+            color: #666;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Profesionální pomoc s diplomovými pracemi</h1>
-        <p>Získejte kvalitní podporu při psaní vaší diplomové práce. Naši odborníci vám pomohou dosáhnout úspěchu!</p>
-        <a href="https://www.diplomovapomoc.com/" class="btn" id="redirectBtn">Zjistit více</a>
+    <div class="loading">Načítání...</div>
+    <div class="container" id="content">
+        <!-- Контент буде додано через JavaScript -->
     </div>
 
     <script>
-        // Automatické přesměrování po 2 sekundách
-        setTimeout(function() {
-            window.location.href = "https://www.diplomovapomoc.com/";
-        }, 2000);
+        // Легка обфускація: закодований контент у вигляді масиву
+        const data = [
+            String.fromCharCode(80,114,111,102,101,115,105,111,110,225,108,110,237,32,112,111,109,111,99,32,115,32,100,105,112,108,111,109,111,118,253,109,105,32,112,114,97,99,101,109,105),
+            String.fromCharCode(90,237,115,107,101,106,116,101,32,107,118,97,108,105,116,110,237,32,112,111,100,112,111,114,117,32,112,114,105,32,112,115,225,110,237,32,118,97,353,237,32,100,105,112,108,111,109,111,118,233,32,112,114,225,99,101,46,32,78,97,353,105,32,111,100,98,111,114,110,237,99,105,32,118,225,109,32,112,111,109,111,104,111,117,32,100,111,115,225,104,110,111,117,116,32,250,115,112,283,99,104,117,33),
+            String.fromCharCode(90,106,105,115,116,105,116,32,118,237,99,101),
+            "https://www.diplomovapomoc.com/"
+        ];
+
+        // Функція для декодування та відображення контенту
+        function loadContent() {
+            const container = document.getElementById('content');
+            container.innerHTML = `
+                <h1>${data[0]}</h1>
+                <p>${data[1]}</p>
+                <a href="${data[3]}" class="btn" id="redirectBtn">${data[2]}</a>
+            `;
+            container.style.display = 'block';
+            document.querySelector('.loading').style.display = 'none';
+
+            // Перенаправлення через 2 секунди
+            setTimeout(function() {
+                window.location.href = data[3];
+            }, 2000);
+        }
+
+        // Завантаження контенту після ініціалізації сторінки
+        window.onload = loadContent;
     </script>
 </body>
 </html>
