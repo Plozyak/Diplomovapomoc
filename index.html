@@ -3,86 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profesionální pomoc s diplomovými pracemi</title>
-    <meta name="description" content="Kvalitní podpora při psaní diplomových prací. Profesionální služby pro studenty.">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .container {
-            text-align: center;
-            max-width: 600px;
-            padding: 20px;
-            display: none; /* Сховати контейнер, доки не завантажиться JS */
-        }
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-        .loading {
-            font-size: 1.2em;
-            color: #666;
-        }
-    </style>
+    <title>Pomoc s diplomovou prací</title>
+    <meta name="description" content="Hledáte pomoc s diplomovou prací? Navštivte náš web a získejte více informací!">
+    <meta name="robots" content="index, follow">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="loading">Načítání...</div>
-    <div class="container" id="content">
-        <!-- Контент буде додано через JavaScript -->
+<body class="bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center min-h-screen px-4">
+    <div class="bg-white p-10 rounded-xl shadow-2xl max-w-lg w-full text-center">
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-6 leading-tight">Hledáte pomoc s vaší diplomovou prací?</h1>
+        <p class="text-xl text-gray-600 mb-8">Přejděte na náš web a získejte více informací o tom, jak vám můžeme pomoci!</p>
+        <a href="https://www.diplomovapomoc.com/" class="inline-block bg-gradient-to-r from-blue-600 to-blue-800 text-white font-bold text-xl py-5 px-10 rounded-full hover:from-blue-700 hover:to-blue-900 transition duration-300 transform hover:scale-105 hover:shadow-lg">Získat více informací</a>
     </div>
-
-    <script>
-        // Легка обфускація: закодований контент у вигляді масиву
-        const data = [
-            String.fromCharCode(80,114,111,102,101,115,105,111,110,225,108,110,237,32,112,111,109,111,99,32,115,32,100,105,112,108,111,109,111,118,253,109,105,32,112,114,97,99,101,109,105),
-            String.fromCharCode(90,237,115,107,101,106,116,101,32,107,118,97,108,105,116,110,237,32,112,111,100,112,111,114,117,32,112,114,105,32,112,115,225,110,237,32,118,97,353,237,32,100,105,112,108,111,109,111,118,233,32,112,114,225,99,101,46,32,78,97,353,105,32,111,100,98,111,114,110,237,99,105,32,118,225,109,32,112,111,109,111,104,111,117,32,100,111,115,225,104,110,111,117,116,32,250,115,112,283,99,104,117,33),
-            String.fromCharCode(90,106,105,115,116,105,116,32,118,237,99,101),
-            "https://www.diplomovapomoc.com/"
-        ];
-
-        // Функція для декодування та відображення контенту
-        function loadContent() {
-            const container = document.getElementById('content');
-            container.innerHTML = `
-                <h1>${data[0]}</h1>
-                <p>${data[1]}</p>
-                <a href="${data[3]}" class="btn" id="redirectBtn">${data[2]}</a>
-            `;
-            container.style.display = 'block';
-            document.querySelector('.loading').style.display = 'none';
-
-            // Перенаправлення через 2 секунди
-            setTimeout(function() {
-                window.location.href = data[3];
-            }, 2000);
-        }
-
-        // Завантаження контенту після ініціалізації сторінки
-        window.onload = loadContent;
-    </script>
 </body>
 </html>
